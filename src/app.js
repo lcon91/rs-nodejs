@@ -38,6 +38,9 @@ app.put("/repositories/:id", (request, response) => {
     
     return response.json(elem);
   });
+
+  response.status(400);
+  return response.json('Not Found');
 });
 
 app.delete("/repositories/:id", (request, response) => {
@@ -46,12 +49,16 @@ app.delete("/repositories/:id", (request, response) => {
     if(repositories[i].id === id){
       repository = repositories[i];
       repositories.splice(i, 1);
+      response.status(204);
       return response.json({
         message: 'Repositório removido com sucesso!',
         item: repository
       });
     }
   }
+
+  response.status(400);
+  return response.json('Not Found');
   
 });
 
@@ -65,6 +72,10 @@ app.post("/repositories/:id/like", (request, response) => {
     
     return response.json({likes: elem.likes});
   });
+
+  response.status(400);
+  return response.json('Not Found');
+  
 });
 
 module.exports = app;
